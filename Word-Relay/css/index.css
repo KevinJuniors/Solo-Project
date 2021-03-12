@@ -1,0 +1,22 @@
+.word {
+    font-size: 24px;
+    background-color: #1ac9c9;
+    color: #444444;
+    width: 750px;
+    display: inline-block;
+}
+
+.value {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 3px solid #049b0b;
+    width: 750px;
+    display: inline-block;
+}
+
+.result {
+    border: 2px solid #237918;
+    display: block;
+    width: 360px;
+    margin-top: 20px;
+}

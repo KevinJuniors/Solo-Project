@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue [Vue.js를 활용하여 좋아요 버튼 구현]</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="../boot/css/bootstrap.css">
+</head>
+<body>
+    <div id="root">
+        <p v-if="liked">좋아요 버튼 활성화</p>
+        <button v-on:click="onClickButton" class="btn btn-success">좋아요</button>
+    </div>
+
+    <script>
+        const app = new Vue ({
+            el: '#root',
+            data: {
+                liked: false,
+            },
+
+            methods: {
+                onClickButton() {
+                    this.liked = true;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
