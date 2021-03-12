@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue [구구단 구현]</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="../../boot/css/bootstrap.css">
+    <style>
+        body {
+            background-color: #73c9a5;
+        }
+
+        #app {
+            font-weight: 500;
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>{{first}} X {{second}} = {{value}}</div>
+        <hr>
+
+        <form v-on:submit="onSubmitForm">
+            <input type="number" v-model="value" ref="answer">
+            <button class="btn btn-outline-primary" type="submit">입력</button>
+        </form>
+
+        <h2>결과 : {{result}}</h2>
+    </div>
+
+    <script>
+        // app 이라는 var 변수명으로 Vue 컴포넌트를 생성
+        var app = new Vue ({
+            // Vue가 실행될 DOM 요소를 "#root" 이라는 이름을 가진 요소로 지정
+            el: "#app",
+            
+            // Vue가 바라볼 Data 객체를 지정
+            data: {
+                // 각각 first, secoud이란 이름을 가진 함수를 Data 객체 내에 선언하여 랜덤으로 구구단을 출제
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                // 사용자가 입력 받을 값을 담을 value 함수
+                value: "",
+
+                /* 사용자로부터 입력 받은 구구단의 정답(value)을 if문을 통해 계산 후 정답 유무를 반환하여 
+                브라우저 상에 출력할 함수 */
+                result: "",
+            },
+
+            // 함수로 정의하고 Data 객체 등을 사용하여 계산 값을 반환하며 캐싱 X, 호출 될 때마다 함수를 지속 실행
+            methods: {
+                // form 양삭을 전송(Submit)하기 전에  Data의 유효성 검사를 실시하는 Form Event
+                onSubmitForm(e) {
+                    // 기본 이벤트의 실행을 차단 시키는 메소드
+                    e.preventDefault();
+                    console.log(this);
+                    console.log(this.first);
+                    console.log(this.second)
+                    console.log(this.first, this.second, this.value);
+
+                    /* 랜덤으로 1단부터 9단까지 제시하는 문제를 사용자가 입력한 정답을 
+                    해당 반복문을 통해 계산 과정을 통해 사용자에게 정답 유무를 브라우저 상에 표시 */
+
+                    /* 
+                        if 문의 조건식은 기본적으로 this.first과 this.second를 곱한 값의 Data Type을 비교하는 조건식이다
+                        그러므로 사용자에게 브라우저 상에서 구구단 문제를 제시되는 this.first과 this.second는 Data Type이 숫자인 반면
+                        input을 통해 사용자로부터 입력 받은 정답의 Data Type은 문자로 간주되어 Flase로 반환되어 만약 구구단의 실제 정답을 입력 했어도
+                        value과 result가 불일치 할 때 반환되는 Flase 일 때 출력되는 "오답 입니다." 이라는 메세지가 브라우저 상에 보이게 되는 것이다.
+
+                        이러한 문제점을 ParseInt 함수를 사용하여 Input으로 문자로 간주되어 입력된 사용자의 정답을 다시 정수형으로 전환시키는 기능을 수행한다.
+                    */
+                    if (this.first * this.second === parseInt(this.value)) {
+                        this.result = "정답 입니다.";
+                            this.first = Math.ceil(Math.random() * 9);
+                            this.second = Math.ceil(Math.random() * 9);
+                            this.value = "";
+                            this.$refs.answer.focus();
+                    } else {
+                        this.result = "오답 입니다.";
+                            this.value = "";
+                            this.$refs.answer.focus();
+                    }
+                },
+            },
+        }); 
+    </script>
+</body>
+</html>

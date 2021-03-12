@@ -13,7 +13,9 @@
     export default {
         data() {
             return {
-                
+                result: [],
+                state: 'waiting',
+                message: '시작 영역을 클릭하여 반응 속도 테스트를 시작하세요.'
             }
         },
 
